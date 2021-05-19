@@ -8,33 +8,36 @@ class Form extends Component {
 
     constructor(props) {
         super(props);
-
         this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleOnChange = this.handleOnChange.bind(this)
     }
 
     async handleSubmit(e) {
         e.preventDefault();
+        new FormData(e.target).forEach((value, key) => {
+            this.DATA[key] = value
+        });
         await this.props.handleSubmit();
-    }
-
-    handleOnChange(e) {
-        const _targer = e.target;
-        this.DATA[_targer.name] = _targer.value;
     }
 
     render() {
         const
             inputs = this.props.inputs.map(
-                ({name, placeholder, type, value, className, labelText}, index) => (
-
-                    <div className="form-group">
-                        <label htmlFor={name} className="d-block">{labelText}</label>
-                        <Input key={index} id={name} name={name} placeholder={placeholder} type={type}
-                               value={this.DATA[name]}
-                               className={className} inputChange={this.handleOnChange}/>
-                    </div>
-                )
+                ({name, placeholder, type, value, className, labelText}, index) => {
+                    let errorContent = "";
+                    if (this.props.errors !== undefined)
+                        if (this.props.errors[name] !== null)
+                            errorContent = <div className="text-danger">{this.props.errors[name]}</div>
+                        else
+                            errorContent = "";
+                    return (
+                        <div className="form-group">
+                            <label htmlFor={name} className="d-block">{labelText}</label>
+                            <Input key={index} id={name} name={name} placeholder={placeholder} type={type}
+                                   className={className}/>
+                            {errorContent}
+                        </div>
+                    )
+                }
             )
 
         return (

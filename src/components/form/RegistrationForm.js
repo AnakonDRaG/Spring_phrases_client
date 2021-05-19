@@ -3,11 +3,13 @@ import Input from "./Input";
 import Client from "../../Client";
 import Form from "./Form";
 import axios from "axios";
+import jwt_decode from "jwt-decode";
+import Cookies from "universal-cookie"
 
 class RegistrationForm extends Component {
     URL = "/auth/signup";
     DATA = {}
-
+    state = {message: {success:null, error:null}}
     inputs = [
         {
             name: "firstname",
@@ -58,7 +60,13 @@ class RegistrationForm extends Component {
         Object.keys(this.DATA).forEach(key => data.append(key, this.DATA[key]));
 
         await Client.post(this.URL, data)
-            .then(res => console.log(res));
+            .then(res => {
+                //jwt_decode(res.data.resources.token);
+
+                const cookies = new Cookies();
+                cookies.set('authToken', res.data.resources.token);
+                //console.log(jwt_decode(cookies.get('authToken')))
+            });
 
     }
 
