@@ -1,2 +1,33 @@
-@import "./bootstrap/css/bootstrap.min.css";
-@import "./bootstrap/lux.min.css";
+
+@import "./bootstrap/morph.min.css";
+
+* {
+  position: relative;
+}
+
+.left-menu-size {
+  min-width: 18em;
+}
+
+.box-sizing-border {
+  box-sizing: border-box!important;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f5fa;
+
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7b8ab8;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #7b8ab8;
+}

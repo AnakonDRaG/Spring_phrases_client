@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
-import Input from "./Input";
-import Client from "../../Client";
 import Form from "./Form";
-import axios from "axios";
+import Cookies from "universal-cookie/lib";
+import {store} from 'react-notifications-component';
+import {useAuthService} from "../../user/auth/AuthService";
 
-class LoginForm extends Component {
-    URL = "/auth/login";
-    DATA = {}
-    state = {errors:{}, success:""}
-    inputs = [
+const LoginForm = () => {
+
+    const {isAuth, login} = useAuthService()
+
+
+    const URL = "/auth/login";
+    const state = {data: {}}
+    const inputs = [
         {
             name: "email",
             placeholder: "email",
@@ -25,50 +28,31 @@ class LoginForm extends Component {
             className: "w-100 form-control",
             labelText: "Password"
         },
-        {name: "submit", placeholder: "", type: "submit", value: "Login", className: "btn btn-primary w-100 submit"}
+        {
+            name: "submit",
+            placeholder: "",
+            type: "submit",
+            value: "Login",
+            className: "btn w-100 submit"
+        }
     ]
 
-    constructor() {
-        super();
+
+    async function handleAfterSubmit(data) {
+        await login(data)
     }
 
-    async handleSubmit() {
-        var data = new FormData();
-
-        Object.keys(this.DATA).forEach(key => data.append(key, this.DATA[key]));
-
-        await Client.post(this.URL, data)
-            .then(result => {
-                this.setState({success: result.data.success})
-                this.setState({errors:{}})
-                console.log(result)
-            }).catch(result => {
-                this.inputs.map(item => {
-                    item.error = null;
-                })
-                const errors = result.response.data.errors
-                this.setState({errors:errors})
-                console.log(result.response)
-            })
-        console.log(this.DATA)
-    }
-
-    render() {
-
-        /*
-        if (successMessage != null)
-            successBox = <div className="alert alert-dismissible alert-success">{successMessage}</div>
-
-        if (errorMessage != null)
-            errorBox = <div className="alert alert-dismissible alert-danger">{errorMessage}</div>
-
-         */
-        return (
-            <div className="w-25 me-auto ms-auto">
-                <Form data={this.DATA} inputs={this.inputs} errors={this.state.errors} handleSubmit={this.handleSubmit.bind(this)}/>
+    return (
+        <div className="d-flex align-items-center min-vh-100">
+            <div className="w-50 me-auto ms-auto ">
+                {!isAuth() && (<Form link={URL} inputs={inputs} handleAfterSubmit={handleAfterSubmit.bind(this)}/>)}
+                {isAuth() && (
+                    <h1 className="text-center">You are logged in!</h1>
+                )}
             </div>
-        );
-    }
+        </div>
+    )
+
 }
 
 export default LoginForm;

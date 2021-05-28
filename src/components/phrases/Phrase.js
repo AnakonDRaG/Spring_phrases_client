@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Client from "../../Client";
 
+
 class Phrase extends Component {
 
     constructor(props) {
@@ -19,7 +20,9 @@ class Phrase extends Component {
 
     render() {
         return (
+
             <div className="bg-light p-5">
+
                 <blockquote className="blockquote text-center">
                     <h1 className="mb-4">{this.state.phrase.title}</h1>
                     <p className="mb-5">{this.state.phrase.meaning}</p>
