@@ -1,17 +1,22 @@
 import React from 'react';
-import {useAuthService} from "../../user/auth/AuthService";
 import {Roles} from "../../user/auth/Roles";
+import AuthService from "../../user/auth/auth.service";
+import {observer} from "mobx-react";
+import {HiPencil} from "react-icons/all";
 
 
-const CrudButtonEdit = (props) => {
-    const {getUser} = useAuthService()
+const CrudButtonEdit = observer((props) => {
+
+    if (!AuthService.isAuth)
+        return ""
+
     return (
         <>
-            {getUser().role === Roles.admin && (
-                <a href={props.link} className={"btn btn-outline-info btn-sm  px-4 " + props.className}>EDIT</a>
+            {AuthService.user.role === Roles.admin && (
+                <a href={props.link} className="btn btn-outline-info"><HiPencil/></a>
             )}
         </>
     );
-};
+})
 
 export default CrudButtonEdit;

@@ -1,30 +1,31 @@
 import React from 'react';
-import {useAuthService} from "../../user/auth/AuthService";
 import {Roles} from "../../user/auth/Roles";
-import Client from "../../Client";
+import {Client} from "../../Client";
+import AuthService from "../../user/auth/auth.service";
+import {observer} from "mobx-react";
+import {Button, Form} from "react-bootstrap";
+import {HiTrash} from "react-icons/all";
 
-export const CrudButtonDelete = (props) => {
-    const {getUser, getAccessToken} = useAuthService()
-    const DATA = new FormData();
-    const id = props.id;
+export const CrudButtonDelete = observer((props) => {
 
     function handleSubmit(e) {
         e.preventDefault()
 
         Client.delete(props.action).then(res => {
-            console.log(res)
             props.actionAfterDelete(res)
         })
 
     }
+    if(!AuthService.isAuth)
+        return ""
 
     return (
         <>
-            {getUser().role === Roles.admin && (
-                <form onSubmit={handleSubmit}>
-                    <input type="submit" className="btn btn-outline-danger btn-sm px-4" value="DELETE"/>
-                </form>
+            {AuthService.user.role === Roles.admin && (
+                <Form onSubmit={handleSubmit}>
+                    <Button type="submit" className="btn-danger"><HiTrash/></Button>
+                </Form>
             )}
         </>
     );
-};
+})

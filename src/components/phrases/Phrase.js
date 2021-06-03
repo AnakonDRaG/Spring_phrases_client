@@ -1,38 +1,54 @@
-import React, {Component} from 'react';
-import Client from "../../Client";
+import React, {useEffect, useState} from 'react';
+import {useParams} from "react-router";
+import {Client} from "../../Client";
+import CrudButtonEdit from "../CRUD/CRUD_ButtonEdit";
+import {CrudButtonDelete} from "../CRUD/CRUD_ButtonDelete";
+import {Button, Spinner} from "react-bootstrap";
+import PageLoadSpinner from "../PageLoadSpinner";
+
+const Phrase = () => {
+    const {id} = useParams()
+    const [phrase, setPhrase] = useState({})
+    const [isLoaded, setLoadStatus] = useState(false)
+
+    const url = "/phrases/" + id
+
+    useEffect(() => {
+        Client.get(url).then(result => {
+            setPhrase(result.data)
+            setLoadStatus(true)
+        })
+    }, [])
 
 
-class Phrase extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {phrase: {}}
-    }
+    if (!isLoaded)
+        return <PageLoadSpinner/>
+    else
+    return (
+        <>
 
-    async getData() {
-        await Client.get(this.props.match.url)
-            .then(res => this.setState({phrase: res.data}))
-    }
+        <div className="d-flex align-items-center justify-content-center min-vh-100" >
 
-    componentDidMount() {
-        this.getData()
-    }
+        <figure key={phrase.index} className=" my-3 px-4 py-4 w-75">
+            <blockquote className="blockquote">
+                <p className="d-flex ">
+                    <span className="w-100 h1 text-primary fw-bold">{phrase.title}</span>
+                    <div>
+                    </div>
+                </p>
+                <p className="mb-0">{phrase.meaning}</p>
 
-    render() {
-        return (
+            </blockquote>
+            <figcaption className="blockquote-footer">
+                <cite title="Author">{phrase.author.firstName} {phrase.author.lastName}</cite>
+            </figcaption>
+            <span className="text-muted">Category: {phrase.category.name}</span>
 
-            <div className="bg-light p-5">
-
-                <blockquote className="blockquote text-center">
-                    <h1 className="mb-4">{this.state.phrase.title}</h1>
-                    <p className="mb-5">{this.state.phrase.meaning}</p>
-                    <footer className="blockquote-footer">Someone famous in <cite title="Source Title">Source
-                        Title</cite></footer>
-                </blockquote>
-
-            </div>
-        );
-    }
-}
+        </figure>
+        </div>
+        </>
+    );
+};
 
 export default Phrase;

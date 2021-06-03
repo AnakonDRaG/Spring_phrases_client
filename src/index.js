@@ -4,16 +4,16 @@ import App from './App';
 import {BrowserRouter} from "react-router-dom";
 import ReactNotification from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
-import {AuthProvider} from "./user/auth/AuthProvider";
-import {useAuthService} from "./user/auth/AuthService";
+import {createBrowserHistory} from "history";
+import axios from "axios";
 
+
+export const History = createBrowserHistory()
 
 ReactDOM.render(
     <BrowserRouter>
-            <AuthProvider>
                 <ReactNotification/>
                 <App/>
-            </AuthProvider>
     </BrowserRouter>,
     document.getElementById('root')
 );

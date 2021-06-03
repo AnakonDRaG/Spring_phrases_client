@@ -1,16 +1,14 @@
 import React, {Component} from 'react';
-import Form from "./Form";
-import Cookies from "universal-cookie/lib";
-import {store} from 'react-notifications-component';
-import {useAuthService} from "../../user/auth/AuthService";
+import AuthService from "../../user/auth/auth.service";
+import {observer} from "mobx-react";
+import FormCrud from "./Form.crud";
+import {useLocation} from 'react-router-dom'
+import {store} from "react-notifications-component";
 
-const LoginForm = () => {
-
-    const {isAuth, login} = useAuthService()
-
-
+const LoginForm = observer(() => {
+    const location = useLocation()
     const URL = "/auth/login";
-    const state = {data: {}}
+
     const inputs = [
         {
             name: "email",
@@ -39,20 +37,37 @@ const LoginForm = () => {
 
 
     async function handleAfterSubmit(data) {
-        await login(data)
+        await AuthService.login(data)
+
+        store.addNotification({
+            title: "Login was SUCCESS!",
+            message: "redirect after some seconds",
+            type: "success",
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+                duration: 1000,
+                onScreen: true
+            }
+
+        });
     }
 
     return (
-        <div className="d-flex align-items-center min-vh-100">
-            <div className="w-50 me-auto ms-auto ">
-                {!isAuth() && (<Form link={URL} inputs={inputs} handleAfterSubmit={handleAfterSubmit.bind(this)}/>)}
-                {isAuth() && (
-                    <h1 className="text-center">You are logged in!</h1>
-                )}
-            </div>
-        </div>
+        <>
+            {!AuthService.isAuth && (
+                <FormCrud link={URL}
+                          inputs={inputs}
+                          redirectAfterSubmit={location.pathname}
+                          handleAfterSubmit={handleAfterSubmit}/>)}
+            {AuthService.isAuth && (
+                <h1 className="text-center">You are logged in!</h1>
+            )}
+        </>
     )
 
-}
+})
 
 export default LoginForm;

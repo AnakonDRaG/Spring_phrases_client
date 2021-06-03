@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {Button} from 'react-bootstrap';
-import {useAuthService} from "./AuthService";
+import AuthService from "../../user/auth/auth.service";
+import {HiLogout, HiOutlineEmojiSad} from "react-icons/all";
 
 
 const Logout = () => {
-    const {logout} = useAuthService()
     return (
-        <Button className="btn-outline-dark px-5" size="sm" onClick={() => logout()}>Logout</Button>
+        <Button className="mx-4" size="sm" onClick={() => AuthService.logout()}>
+            <HiLogout className="mx-2"/>
+        </Button>
     );
 
 }

@@ -1,30 +1,78 @@
 import React from 'react';
-import {HiUserGroup} from "react-icons/hi";
+import {HiClipboardList, HiUser, HiUserGroup} from "react-icons/hi";
 import {CRUD_ButtonCreate} from "../CRUD/CRUD_ButtonCreate";
-import {useAuthService} from "../../user/auth/AuthService";
-import Client from "../../Client";
+
+import {Client} from "../../Client";
+import CrudButtonEdit from "../CRUD/CRUD_ButtonEdit";
+import {CrudButtonDelete} from "../CRUD/CRUD_ButtonDelete";
+import {store} from "react-notifications-component";
 
 export const Categories = () => {
     const {useState, useEffect} = React
     const [categories, setCategory] = useState({})
     const URL = "/categories";
-    const {getUser} = useAuthService()
 
     useEffect(() => {
         Client.get(URL).then(res => {
             setCategory(res.data)
-            console.log(res.data)
+
         })
     }, [])
+
+    function afterDelete(data){
+
+        data = data.data
+        setCategory( categories.filter(({сategory_ID}) => сategory_ID !== data.сategory_ID))
+        store.addNotification({
+            title: "SUCCESS!",
+            message: " ",
+            type: "success",
+            insert: "top",
+            container: "top-right",
+            animationIn: ["animate__animated", "animate__fadeIn"],
+            animationOut: ["animate__animated", "animate__fadeOut"],
+            dismiss: {
+                duration: 1000,
+                onScreen: true
+            }
+
+        });
+    }
+
     return (
         <>
+
             <div className="py-3">
-                <div className="d-flex mx-5">
-                    <HiUserGroup className="me-3 fs-1"/>
-                    <div className="w-100 "><h1 className="text-uppercase">Categories</h1></div>
-                    <CRUD_ButtonCreate link="/categories/add"/>
+                <div className="text-center mb-2">
+                    <CRUD_ButtonCreate link="/phrases/add"/>
                 </div>
 
+                {categories.length === 0 && (
+                    <div className="d-flex align-items-center ">
+                        <div className="w-100 font-monospace me-auto ms-auto text-center">
+                            <h1 className="h6 p-5">No categories</h1>
+                        </div>
+                    </div>
+                )}
+                {categories.length > 0 && (
+                    <div className="mx-5">
+                        {
+                            categories.map(({category_ID, name}, index) => {
+
+                                return (
+                                    <div className="d-flex shadow-sm mb-4 px-4 py-4 align-items-center">
+                                        <div className="w-100 h3 fw-bold mb-0 pb-0">
+                                            {name}
+                                        </div>
+
+                                        <div><CrudButtonEdit link={"/categories/" + category_ID + "/edit"}/></div>
+                                        <div className="ms-2"><CrudButtonDelete actionAfterDelete={afterDelete} action={URL + "/" + category_ID} id={category_ID}/></div>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                )}
             </div>
 
         </>

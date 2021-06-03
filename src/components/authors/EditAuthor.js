@@ -1,10 +1,9 @@
 import React from 'react';
-import Form from "../form/Form";
-import {AuthorInputs} from "../inputs";
+import {AuthorInputs, PhraseInputs} from "../inputs";
 import {useParams} from "react-router";
-import Client from "../../Client";
-import {Spinner} from "react-bootstrap";
+import {Client} from "../../Client";
 import {store} from "react-notifications-component";
+import FormCrud from "../form/Form.crud";
 
 export const EditAuthor = (props) => {
     const {useState, useEffect} = React
@@ -22,7 +21,7 @@ export const EditAuthor = (props) => {
     function handleAfterSubmit(data) {
         store.addNotification({
             title: "SUCCESS!",
-            message: "Author " + data.firstName + " " + data.lastName + " was update!",
+            message: "Author was update!",
             type: "success",
             insert: "top",
             container: "top-right",
@@ -34,31 +33,20 @@ export const EditAuthor = (props) => {
             }
 
         });
-
-        setTimeout(() => {
-
-            window.location.replace("/c_author");
-        }, 1000)
     }
 
     return (
         <div className="d-flex align-items-center min-vh-100">
             <div className="w-50 me-auto ms-auto">
-                <div className="mb-5">
-                  <div>
-                      <div className="h6">First name (last)</div>
-                      {author.firstName}
-                  </div>
-                    <div className="">
-                        <div className="h6">Last name (last)</div>
-                        {author.lastName}
-                    </div>
-
-                </div>
                 <div className="">
                     {(
-                        <Form link={URL+ "/"+ id} inputs={AuthorInputs(author)}
-                              handleAfterSubmit={handleAfterSubmit.bind(this)} metrod="PUT"/>
+                        <FormCrud
+                            handleAfterSubmit={handleAfterSubmit}
+                            inputs={AuthorInputs({firstName: author.firstName, lastName: author.lastName})}
+                            link={URL+ "/"+ id}
+                            redirectAfterSubmit="/c_author"
+                            metrod="PUT"
+                        />
                     )
                     }
                 </div>

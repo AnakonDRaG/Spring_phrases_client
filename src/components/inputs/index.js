@@ -1,10 +1,12 @@
-
-export const PhraseInputs = (value = "") => [
+export const PhraseInputs = (
+    value =
+        {title: "", meaning: "", selectedAuthor: "", selectedCategory: ""},
+    optionsItems = {authors: {}, categories: {}}) => [
     {
         name: "title",
         placeholder: "",
         type: "text",
-        value: value['title'],
+        value: value.title,
         className: "w-100 form-control",
         labelText: "Title"
     },
@@ -12,20 +14,38 @@ export const PhraseInputs = (value = "") => [
         name: "meaning",
         placeholder: "",
         type: "textarea",
-        value: value['meaning'],
+        value: value.meaning,
         className: "w-100 form-control",
         labelText: "Meaning"
+    },
+    {
+        name: "author_id",
+        placeholder: "",
+        type: "select",
+        value: optionsItems.authors,
+        selectedValue: value.selectedAuthor,
+        className: "w-100 form-control",
+        labelText: "Author"
+    },
+    {
+        name: "category_id",
+        placeholder: "",
+        type: "select",
+        value: optionsItems.categories,
+        selectedValue: value.selectedCategory,
+        className: "w-100 form-control",
+        labelText: "Category"
     },
     {
         name: "submit",
         placeholder: "",
         type: "submit",
         value: "Submit",
-        className: "btn w-100 submit"
+        className: "btn w-100 submit mt-4"
     }
 ]
 
-export const AuthorInputs = (value = "") => {
+export const AuthorInputs = (value = {firstName: "", lastName: ""}) => {
     return [
         {
             name: "firstName",

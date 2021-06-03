@@ -1,13 +1,15 @@
-import React, {Component} from 'react';
-import Form from "./Form";
-import Cookies from "universal-cookie"
+import React, {useState} from 'react';
+import AuthService from "../../user/auth/auth.service";
 import {store} from "react-notifications-component";
+import FormCrud from "./Form.crud";
+import {observer} from "mobx-react";
+import {useLocation} from "react-router-dom";
 
-class RegistrationForm extends Component {
-    URL = "/auth/signup";
-    DATA = {}
-    state = {message: {success: null, error: null}}
-    inputs = [
+const RegistrationForm = observer(() => {
+    const URL = "/auth/signup";
+    const location = useLocation()
+
+    const inputs = [
         {
             name: "firstName",
             placeholder: "firstName",
@@ -51,16 +53,11 @@ class RegistrationForm extends Component {
         {name: "submit", placeholder: "", type: "submit", value: "Registration", className: "btn w-100 submit"}
     ]
 
-    async handleAfterSubmit(data) {
-        console.log(data)
-        data = data.body.resources
-        if (data === undefined) return
-        if (data['accessToken'] === null || data['refreshToken'] == null) return
+    const handleAfterSubmit = async (data) => {
 
 
-        const cookies = new Cookies();
-        cookies.set('accessToken', data['accessToken'])
-        cookies.set('refreshToken', data['refreshToken'])
+        await AuthService.registration(data.body.resources)
+
         store.addNotification({
             title: "User was created!",
             message: "redirect after some seconds",
@@ -75,21 +72,23 @@ class RegistrationForm extends Component {
             }
 
         });
-        setTimeout(() => {
 
-            window.location.replace("/");
-        }, 500)
     }
 
-    render() {
-        return (
-            <div className="d-flex align-items-center min-vh-100">
-                <div className="w-25 me-auto ms-auto">
-                    <Form link={this.URL} inputs={this.inputs} handleAfterSubmit={this.handleAfterSubmit.bind(this)}/>
-                </div>
-            </div>
-        );
-    }
-}
+    return (
+        <>
+            {!AuthService.isAuth && (
+                <FormCrud link={URL}
+                          inputs={inputs}
+                          redirectAfterSubmit={location.pathname}
+                          handleAfterSubmit={handleAfterSubmit}/>)}
+            {AuthService.isAuth && (
+                <h1 className="text-center">You are logged in!</h1>
+            )}
+        </>
+    )
+
+
+})
 
 export default RegistrationForm;
