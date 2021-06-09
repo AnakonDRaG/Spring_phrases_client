@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {Button} from 'react-bootstrap';
 import AuthService from "../../user/auth/auth.service";
-import {HiLogout, HiOutlineEmojiSad} from "react-icons/all";
+import { RiDoorOpenFill} from "react-icons/all";
 
 
 const Logout = () => {
     return (
-        <Button className="mx-4" size="sm" onClick={() => AuthService.logout()}>
-            <HiLogout className="mx-2"/>
+        <Button className="mx-4 btn-outline-light shadow-none" size="sm" onClick={() => AuthService.logout()}>
+            <RiDoorOpenFill className="my-2 mx-1 fs-4"/>
         </Button>
     );
 

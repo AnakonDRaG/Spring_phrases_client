@@ -30,7 +30,7 @@ const Phrase = () => {
 
         <div className="d-flex align-items-center justify-content-center min-vh-100" >
 
-        <figure key={phrase.index} className=" my-3 px-4 py-4 w-75">
+        <figure key={phrase.index} className="my-3 p-5 w-75 box">
             <blockquote className="blockquote">
                 <p className="d-flex ">
                     <span className="w-100 h1 text-primary fw-bold">{phrase.title}</span>

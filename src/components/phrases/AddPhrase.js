@@ -5,9 +5,12 @@ import {Client} from "../../Client";
 import {Spinner} from "react-bootstrap";
 import {store} from "react-notifications-component";
 import PageLoadSpinner from "../PageLoadSpinner";
+import {observer} from "mobx-react";
+import AuthService from "../../user/auth/auth.service";
+import DontHavePermissions from "../errors/DontHavePermissions";
 
 
-const AddPhrase = (callback, deps) => {
+const AddPhrase = observer((callback, deps) => {
     const url = "/phrases/create"
     const [authors, setAuthors] = useState({})
     const [categories, setCategories] = useState({})
@@ -38,6 +41,9 @@ const AddPhrase = (callback, deps) => {
         });
     })
 
+    if (!AuthService.isAuth)
+        return <DontHavePermissions/>
+
     if(!isLoaded)
         return <PageLoadSpinner/>
 
@@ -48,10 +54,11 @@ const AddPhrase = (callback, deps) => {
                     handleAfterSubmit={handleAfterSubmit}
                     inputs={PhraseInputs({}, {authors, categories})}
                     link={url}
+                    formClassName="box"
                     redirectAfterSubmit="/phrases"/>
             </div>
         </div>
     );
-};
+})
 
 export default AddPhrase;

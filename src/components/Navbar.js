@@ -12,47 +12,59 @@ import RegistrationForm from "./form/RegistrationForm";
 
 const Navbar = observer(() => {
 
-
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light p-0 m-0">
+        <nav className="navbar navbar-expand-lg navbar-white bg-light p-0 m-0">
             <div
-                className="side-navbar  active-nav d-flex justify-content-between flex-wrap flex-column box-sizing-border min-vh-100 left-menu-size"
+                className="side-navbar active-nav d-flex justify-content-between flex-wrap flex-column box-sizing-border min-vh-100 left-menu-size"
                 id="sidebar">
                 <ul className="nav flex-column text-white w-100">
-                    <div className="nav-link fs-5 text-uppercase fw-bold text-light bg-primary py-5 text-center  w-100">
-                        Catch phrases
+                    <div className="fw-bold pt-5 pb-4 text-center text-primary w-100">
+                        Phrases<span className="fw-bold">App</span>
                     </div>
-
-                    <li className="nav-link ">
-                        <NavLink to="/" className="nav-link" activeClassName="active fw-bold active" exact>
-                            <HiAnnotation className="me-3 fs-4"/>Phrases
+                    <li className="mb-4">
+                        <NavLink to="/" className="nav-link p-0 m-0 text-center" activeClassName="active fw-bold text-primary" exact>
+                            <div className="nav-item-icon bg-primary mb-2">
+                                <HiAnnotation className="fs-4 text-white"/>
+                            </div>
+                            <div className="">Phrases</div>
                         </NavLink>
                     </li>
-                    <li className="nav-link">
-                        <NavLink to="/c_author" className="nav-link" activeClassName="active fw-bold">
-                            <HiUser className="me-3 fs-4"/>Authors
+                    <li className="mb-4">
+                        <NavLink to="/c_author" className="nav-link p-0 m-0 text-center" activeClassName="active fw-bold text-primary">
+                            <div className="nav-item-icon bg-primary mb-2">
+                                <HiUser className="fs-4 text-white"/>
+                            </div>
+                            <div className="">Authors</div>
                         </NavLink>
                     </li>
-                    <li className="nav-link">
-                        <NavLink to="/categories" className="nav-link" activeClassName="active fw-bold">
-                            <HiClipboardList className="me-3 fs-4"/>Categories
+                    <li className="mb-4">
+                        <NavLink to="/categories" className="nav-link p-0 m-0 text-center" activeClassName="active fw-bold text-primary">
+                            <div className="nav-item-icon bg-primary mb-2">
+                                <HiClipboardList className="fs-4 text-white"/>
+                            </div>
+                            <div className="">Categories</div>
                         </NavLink>
                     </li>
                 </ul>
-                <div className="">
+                <div className="bg-primary">
                     {AuthService.isAuth && <NavProfile/>}
                     {!AuthService.isAuth && (
-                        <div className="text-center mb-4">
-                            <ModalComponent
-                                button={<span className="link-primary">Login<HiLogin className="ms-2"/></span>}
-                                title="Login"
-                                content={<LoginForm/>}
-                                size="sm"/>
-                            <ModalComponent
-                                button={<span className="link-primary ms-4">Sign up</span>}
-                                title="Registration"
-                                content={<RegistrationForm/>}
-                                size="lg"/>
+                        <div className="text-center py-4">
+                            <div>
+                                <ModalComponent
+                                    button={<span className="link-primary btn btn-sm px-3 btn-outline-light mb-3 shadow-none">Login<HiLogin
+                                        className="ms-2"/></span>}
+                                    title="Login"
+                                    content={<LoginForm/>}
+                                    size="sm"/>
+                            </div>
+                            <div>
+                                <ModalComponent
+                                    button={<span className="link-primary btn btn-sm px-4 btn-outline-light shadow-none">Sign up</span>}
+                                    title="Registration"
+                                    content={<RegistrationForm/>}
+                                    size="md"/>
+                            </div>
                         </div>
                     )}
                 </div>

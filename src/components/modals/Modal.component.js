@@ -23,14 +23,17 @@ const ModalComponent = (props) => {
                 size={size === undefined ? "lg" : size}
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
+                contentClassName="bg-white"
             >
                 <Modal.Header>
                     <Modal.Title id="contained-modal-title-vcenter">
                         {title}
                     </Modal.Title>
-                    <Button className="btn-close btn-sm" onClick={() => {
+                    <Button className="btn-close shadow-none bg-white  me-1" data-bs-dismiss="modal" aria-label="Close" onClick={() => {
                         setModalShow(false)
-                    }}/>
+                    }}>
+                        <span aria-hidden="true"/>
+                    </Button>
                 </Modal.Header>
                 <Modal.Body>
                     <p>

@@ -4,8 +4,11 @@ import {store} from "react-notifications-component";
 import {AuthorInputs, CategoriesInputs} from "../inputs";
 import {useParams} from "react-router";
 import FormCrud from "../form/Form.crud";
+import AuthService from "../../user/auth/auth.service";
+import DontHavePermissions from "../errors/DontHavePermissions";
+import {observer} from "mobx-react";
 
-const EditCategory = () => {
+const EditCategory = observer(() => {
     const {useState, useEffect} = React
     const {id} = useParams()
     const [category, setCategory] = useState({})
@@ -41,16 +44,13 @@ const EditCategory = () => {
         }, 1000)
     }
 
+
+    if (!AuthService.isAuth)
+        return <DontHavePermissions/>
+
     return (
         <div className="d-flex align-items-center min-vh-100">
             <div className="w-50 me-auto ms-auto">
-                <div className="mb-5">
-                    <div className="">
-                        <div className="h6">Last title</div>
-                        {category.name}
-                    </div>
-
-                </div>
                 <div className="">
                     {(
                         <FormCrud
@@ -58,6 +58,7 @@ const EditCategory = () => {
                             inputs={CategoriesInputs(category)}
                             handleAfterSubmit={handleAfterSubmit.bind(this)}
                             redirectAfterSubmit="/categories"
+                            formClassName="bg-white rounded-lg"
                             metrod="PUT"/>
                     )
                     }
@@ -65,6 +66,6 @@ const EditCategory = () => {
             </div>
         </div>
     );
-};
+})
 
 export default EditCategory;

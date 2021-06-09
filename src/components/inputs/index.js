@@ -41,7 +41,7 @@ export const PhraseInputs = (
         placeholder: "",
         type: "submit",
         value: "Submit",
-        className: "btn w-100 submit mt-4"
+        className: "btn submit"
     }
 ]
 
@@ -68,7 +68,7 @@ export const AuthorInputs = (value = {firstName: "", lastName: ""}) => {
             placeholder: "",
             type: "submit",
             value: "Submit",
-            className: "btn w-100 submit"
+            className: "btn submit"
         }
     ]
 }
@@ -89,7 +89,7 @@ export const CategoriesInputs = (value = "") => {
             placeholder: "",
             type: "submit",
             value: "Submit",
-            className: "btn w-100 submit"
+            className: "btn submit"
         }
     ]
 }

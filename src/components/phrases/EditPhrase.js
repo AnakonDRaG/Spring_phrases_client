@@ -6,8 +6,11 @@ import {PhraseInputs} from "../inputs";
 import {useParams} from "react-router";
 import {Spinner} from "react-bootstrap";
 import PageLoadSpinner from "../PageLoadSpinner";
+import AuthService from "../../user/auth/auth.service";
+import DontHavePermissions from "../errors/DontHavePermissions";
+import {observer} from "mobx-react";
 
-const EditPhrase = () => {
+const EditPhrase = observer(() => {
 
     const {id} = useParams()
     const [phrase, setPhrase] = useState({})
@@ -47,6 +50,9 @@ const EditPhrase = () => {
         });
     }
 
+    if (!AuthService.isAuth)
+        return <DontHavePermissions/>
+
     return (
         <div className="d-flex align-items-center min-vh-100">
             <div className="w-50 me-auto ms-auto">
@@ -66,6 +72,7 @@ const EditPhrase = () => {
                                 )}
                             link={URL + "/" + id}
                             redirectAfterSubmit="/phrases"
+                            formClassName="box"
                             metrod="PUT"
                         />
                     )
@@ -74,6 +81,6 @@ const EditPhrase = () => {
             </div>
         </div>
     );
-};
+})
 
 export default EditPhrase;

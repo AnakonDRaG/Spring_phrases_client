@@ -20,5 +20,5 @@ User signed in as a guest
 ![User signed in as a guest](md/i2.png)
 ## Modal 
 
-![Sign in form](md/i4.png)
-![Sign up form](md/i3.png)
+![Sign in form](md/i3.png)
+![Sign up form](md/i4.png)

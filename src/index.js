@@ -5,7 +5,6 @@ import {BrowserRouter} from "react-router-dom";
 import ReactNotification from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
 import {createBrowserHistory} from "history";
-import axios from "axios";
 
 
 export const History = createBrowserHistory()

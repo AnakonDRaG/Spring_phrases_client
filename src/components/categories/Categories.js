@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {HiClipboardList, HiUser, HiUserGroup} from "react-icons/hi";
 import {CRUD_ButtonCreate} from "../CRUD/CRUD_ButtonCreate";
 
@@ -6,16 +6,18 @@ import {Client} from "../../Client";
 import CrudButtonEdit from "../CRUD/CRUD_ButtonEdit";
 import {CrudButtonDelete} from "../CRUD/CRUD_ButtonDelete";
 import {store} from "react-notifications-component";
+import PageLoadSpinner from "../PageLoadSpinner";
 
 export const Categories = () => {
     const {useState, useEffect} = React
     const [categories, setCategory] = useState({})
+    const [isLoaded, setLoadStatus] = useState(false)
     const URL = "/categories";
 
     useEffect(() => {
         Client.get(URL).then(res => {
             setCategory(res.data)
-
+            setLoadStatus(true)
         })
     }, [])
 
@@ -39,6 +41,9 @@ export const Categories = () => {
         });
     }
 
+    if (!isLoaded)
+        return <PageLoadSpinner/>
+
     return (
         <>
 
@@ -60,7 +65,7 @@ export const Categories = () => {
                             categories.map(({category_ID, name}, index) => {
 
                                 return (
-                                    <div className="d-flex shadow-sm mb-4 px-4 py-4 align-items-center">
+                                    <div className="d-flex box mb-4 p-4 align-items-center">
                                         <div className="w-100 h3 fw-bold mb-0 pb-0">
                                             {name}
                                         </div>

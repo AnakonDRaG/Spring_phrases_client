@@ -58,7 +58,9 @@ export const Routes = () => {
                             </Route>
 
                             <Route path="/categories/add">
-                                <FormCrud link="/categories" inputs={CategoriesInputs()}
+                                <FormCrud link="/categories"
+                                          inputs={CategoriesInputs()}
+                                          formClassName="box"
                                           redirectAfterSubmit="/categories"/>
                             </Route>
                             <Route path="/categories/:id/edit">

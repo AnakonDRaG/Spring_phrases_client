@@ -4,8 +4,11 @@ import {useParams} from "react-router";
 import {Client} from "../../Client";
 import {store} from "react-notifications-component";
 import FormCrud from "../form/Form.crud";
+import AuthService from "../../user/auth/auth.service";
+import DontHavePermissions from "../errors/DontHavePermissions";
+import {observer} from "mobx-react";
 
-export const EditAuthor = (props) => {
+export const EditAuthor = observer((props) => {
     const {useState, useEffect} = React
     const {id} = useParams()
     const [author, setAuthor] = useState({})
@@ -18,6 +21,7 @@ export const EditAuthor = (props) => {
         })
 
     }, [])
+
     function handleAfterSubmit(data) {
         store.addNotification({
             title: "SUCCESS!",
@@ -35,6 +39,9 @@ export const EditAuthor = (props) => {
         });
     }
 
+    if (!AuthService.isAuth)
+        return <DontHavePermissions/>
+
     return (
         <div className="d-flex align-items-center min-vh-100">
             <div className="w-50 me-auto ms-auto">
@@ -43,8 +50,9 @@ export const EditAuthor = (props) => {
                         <FormCrud
                             handleAfterSubmit={handleAfterSubmit}
                             inputs={AuthorInputs({firstName: author.firstName, lastName: author.lastName})}
-                            link={URL+ "/"+ id}
+                            link={URL + "/" + id}
                             redirectAfterSubmit="/c_author"
+                            formClassName="box"
                             metrod="PUT"
                         />
                     )
@@ -54,4 +62,4 @@ export const EditAuthor = (props) => {
         </div>
     );
 
-};
+})

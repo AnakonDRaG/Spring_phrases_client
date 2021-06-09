@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Client} from "../../Client";
 import {CRUD_ButtonCreate} from "../CRUD/CRUD_ButtonCreate";
 import {CrudButtonDelete} from "../CRUD/CRUD_ButtonDelete";
@@ -7,16 +7,18 @@ import CrudButtonEdit from "../CRUD/CRUD_ButtonEdit";
 import {HiChevronRight, HiCursorClick, HiUser, HiUserGroup} from "react-icons/hi";
 import {observer} from "mobx-react";
 import {History} from "../../index";
+import PageLoadSpinner from "../PageLoadSpinner";
 
 export const Authors = observer(({history}) => {
     const {useState, useEffect} = React
     const [authors, setAuthors] = useState({})
+    const [isLoaded, setLoadStatus] = useState(false)
     const URL = "/authors";
 
     useEffect(() => {
         Client.get(URL).then(res => {
             setAuthors(res.data)
-
+            setLoadStatus(true)
         })
     }, [])
 
@@ -39,9 +41,12 @@ export const Authors = observer(({history}) => {
         });
     }
 
+    if (!isLoaded)
+        return <PageLoadSpinner/>
+
     return (
         <>
-            <div className="text-center mb-2 py-3">
+            <div className="text-center py-3">
                 <CRUD_ButtonCreate link="/c_author/add"/>
             </div>
             <div className="py-3">
@@ -60,7 +65,7 @@ export const Authors = observer(({history}) => {
 
                                 return (
                                     <>
-                                        <div className="d-flex shadow-sm mb-4 px-4 py-4 align-items-center">
+                                        <div className="d-flex box mb-4 p-4 align-items-center">
                                             <div role="button"
                                                  onClick={() => {
                                                      History.push("/c_author/" + author_ID)

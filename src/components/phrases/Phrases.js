@@ -48,54 +48,54 @@ const Phrases = observer(() => {
 
     if (!isLoaded)
         return <PageLoadSpinner/>
-    else
-        return (
-            <div className="py-3">
-                <div className="text-center mb-2">
-                    <CRUD_ButtonCreate link="/phrases/add"/>
-                </div>
-                <div className="w-100 me-auto ms-auto px-5">
-                    {
-                        Array.isArray(phrases) &&
-                        phrases.map(({phrase_ID, title, meaning, author, category}, index) => {
-                            return (
-                                <figure key={index} className="mb-5 shadow-sm p-4">
-                                    <blockquote className="blockquote">
-                                        <p className="d-flex ">
-                                            <h1 role="button"
-                                                 onClick={() => {
-                                                     History.push(url + "/" + phrase_ID)
-                                                 }}
-                                                 className="w-100 h3 text-primary fw-bold m-0 p-0">
-                                                {title}
-                                            </h1>
-                                            <div>
-                                                <CrudButtonEdit
-                                                    link={url + "/" + phrase_ID + "/edit"}
-                                                />
-                                            </div>
-                                            <div className="ms-2">
-                                                <CrudButtonDelete
-                                                    actionAfterDelete={handleAfterDelete}
-                                                    action={url + "/" + phrase_ID}
-                                                    id={phrase_ID}
-                                                />
-                                            </div>
-                                        </p>
-                                        <p className="mb-0">{meaning}</p>
 
-                                    </blockquote>
-                                    <figcaption className="blockquote-footer">
-                                        <cite title="Author">{author.firstName} {author.lastName}</cite>
-                                    </figcaption>
-                                </figure>
-
-                            )
-                        })
-                    }
-                </div>
+    return (
+        <div className="py-3">
+            <div className="text-center mb-2">
+                <CRUD_ButtonCreate link="/phrases/add"/>
             </div>
-        );
+            <div className="w-100 me-auto ms-auto px-5">
+                {
+                    Array.isArray(phrases) &&
+                    phrases.map(({phrase_ID, title, meaning, author, category}, index) => {
+                        return (
+                            <figure key={index} className="mb-5 box p-4">
+                                <blockquote className="blockquote">
+                                    <p className="d-flex ">
+                                        <h1 role="button"
+                                            onClick={() => {
+                                                History.push(url + "/" + phrase_ID)
+                                            }}
+                                            className="w-100 h3 text-primary fw-bold m-0 p-0">
+                                            {title}
+                                        </h1>
+                                        <div>
+                                            <CrudButtonEdit
+                                                link={url + "/" + phrase_ID + "/edit"}
+                                            />
+                                        </div>
+                                        <div className="ms-2">
+                                            <CrudButtonDelete
+                                                actionAfterDelete={handleAfterDelete}
+                                                action={url + "/" + phrase_ID}
+                                                id={phrase_ID}
+                                            />
+                                        </div>
+                                    </p>
+                                    <p className="mb-0">{meaning}</p>
+
+                                </blockquote>
+                                <figcaption className="blockquote-footer">
+                                    <cite title="Author">{author.firstName} {author.lastName}</cite>
+                                </figcaption>
+                            </figure>
+
+                        )
+                    })
+                }
+            </div>
+        </div>
+    );
 
 })
 

@@ -8,7 +8,7 @@ const FormCrud = (props) => {
     const [errors, setErrors] = useState({})
     const [successData, setSuccess] = useState({})
     let form = null
-    const {redirectAfterSubmit, inputs, handleAfterSubmit, link} = props
+    const {redirectAfterSubmit, inputs, handleAfterSubmit, link, formClassName} = props
     let formData = {}
 
 
@@ -52,7 +52,9 @@ const FormCrud = (props) => {
             onSubmit={handleSubmit}
             ref={fm => {
                 form = fm
-            }}>
+            }}
+            className={formClassName}
+        >
             {
                 inputs.map((item, index) => {
 
@@ -70,7 +72,7 @@ const FormCrud = (props) => {
                                 {
                                     "submit": <Button type="submit" key={index} id={item.name}
                                                       placeholder={item.placeholder}
-                                                      className={item.className}>{item.value && item.value}</Button>,
+                                                      className={"btn-outline-primary d-block ms-auto " + item.className}>{item.value && item.value}</Button>,
                                     "textarea": <Form.Control key={index} id={item.name} name={item.name}
                                                               className={item.className}
                                                               as="textarea"
@@ -101,8 +103,8 @@ const FormCrud = (props) => {
 
                 })
             }
-                </Form>
-                );
-            }
+        </Form>
+    );
+}
 
 export default FormCrud;

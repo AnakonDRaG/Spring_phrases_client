@@ -1,16 +1,53 @@
+@import "bootstrap/css/bootstrap.min.css";
+@import "bootstrap/morph.min.css";
 
-@import "bootstrap/minty.min.css";
 
 * {
   position: relative;
 }
 
+.shadow {
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important
+}
+
 .left-menu-size {
-  min-width: 18em;
+  width: 8em;
 }
 
 .box-sizing-border {
-  box-sizing: border-box!important;
+  box-sizing: border-box !important;
+}
+
+
+.rounded-lg {
+  border-radius: 1em !important;
+}
+
+.btn {
+  @extend .rounded-lg;
+  transition: .2s;
+}
+
+.btn:hover {
+  transition: .2s;
+}
+
+.box {
+  @extend .rounded-lg;
+  background: white !important;
+  padding: 1.5rem !important
+}
+
+
+.nav-item-icon {
+  display: inline-block;
+  padding: 0.5em;
+  border-radius: 8px;
+
+}
+
+.navbar-white {
+  background: white !important;
 }
 
 
@@ -31,3 +68,4 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #7b8ab8;
 }
+
