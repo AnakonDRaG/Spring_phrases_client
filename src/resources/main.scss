@@ -34,10 +34,19 @@
 
 .box {
   @extend .rounded-lg;
-  background: white !important;
-  padding: 1.5rem !important
+  display: block;
+  background: white;
+  padding: 1.5rem !important;
+
 }
 
+.box-filter {
+  width: 24em !important;
+}
+
+.phrase-searcher-result {
+  z-index: 10;
+}
 
 .nav-item-icon {
   display: inline-block;

@@ -49,7 +49,7 @@ export const Categories = () => {
 
             <div className="py-3">
                 <div className="text-center mb-2">
-                    <CRUD_ButtonCreate link="/phrases/add"/>
+                    <CRUD_ButtonCreate link="/categories/add"/>
                 </div>
 
                 {categories.length === 0 && (

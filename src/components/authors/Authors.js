@@ -47,7 +47,7 @@ export const Authors = observer(({history}) => {
     return (
         <>
             <div className="text-center py-3">
-                <CRUD_ButtonCreate link="/c_author/add"/>
+                <CRUD_ButtonCreate link="/authors/add"/>
             </div>
             <div className="py-3">
                 {authors.length === 0 && (
@@ -68,14 +68,14 @@ export const Authors = observer(({history}) => {
                                         <div className="d-flex box mb-4 p-4 align-items-center">
                                             <div role="button"
                                                  onClick={() => {
-                                                     History.push("/c_author/" + author_ID)
+                                                     History.push("/authors/" + author_ID)
                                                  }}
                                                  className="w-100 h4 mb-0 pb-0 fw-bold">
                                                 <span className="">
                                                 {firstName} {lastName}
                                             </span>
                                             </div>
-                                            <div><CrudButtonEdit link={"/c_author/" + author_ID + "/edit"}/></div>
+                                            <div><CrudButtonEdit link={"/authors/" + author_ID + "/edit"}/></div>
                                             <div className="ms-2"><CrudButtonDelete actionAfterDelete={afterDelete}
                                                                                     action={URL + "/" + author_ID}
                                                                                     id={author_ID}/></div>

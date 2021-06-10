@@ -30,7 +30,7 @@ const Navbar = observer(() => {
                         </NavLink>
                     </li>
                     <li className="mb-4">
-                        <NavLink to="/c_author" className="nav-link p-0 m-0 text-center" activeClassName="active fw-bold text-primary">
+                        <NavLink to="/authors" className="nav-link p-0 m-0 text-center" activeClassName="active fw-bold text-primary">
                             <div className="nav-item-icon bg-primary mb-2">
                                 <HiUser className="fs-4 text-white"/>
                             </div>

@@ -6,8 +6,8 @@ import AuthService from "../../user/auth/auth.service";
 import DontHavePermissions from "../errors/DontHavePermissions";
 import {observer} from "mobx-react";
 
-const AddAuthor = observer(() => {
-    const url = "/authors"
+const AddCategory = observer(() => {
+    const url = "/categories/add"
     const handleAfterSubmit = useCallback((data) => {
         store.addNotification({
             title: "SUCCESS!",
@@ -36,10 +36,10 @@ const AddAuthor = observer(() => {
                     inputs={AuthorInputs()}
                     link={url}
                     formClassName="box"
-                    redirectAfterSubmit="/authors"/>
+                    redirectAfterSubmit="/categories"/>
             </div>
         </div>
     );
 })
 
-export default AddAuthor;
+export default AddCategory;

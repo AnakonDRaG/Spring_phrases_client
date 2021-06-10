@@ -16,6 +16,7 @@ import FormCrud from "./form/Form.crud";
 import AddAuthor from "./authors/AddAuthor";
 import EditPhrase from "./phrases/EditPhrase";
 import Author from "./authors/Author";
+import AddCategory from "./categories/AddCategory";
 
 
 export const Routes = () => {
@@ -42,26 +43,24 @@ export const Routes = () => {
 
                             <Route path="/phrases/:id" render={(props) => <Phrase {...props}/>}/>
 
-                            <Route exact path="/c_author" component={Authors}/>
-                            <Route path="/c_author/add">
+                            <Route exact path="/authors" component={Authors}/>
+                            <Route path="/authors/add">
                                 <AddAuthor/>
                             </Route>
 
-                            <Route path="/c_author/:id/edit">
+                            <Route path="/authors/:id/edit">
                                 <EditAuthor/>
                             </Route>
-                            <Route path="/c_author/:id"><Author/></Route>
-
+                            <Route path="/authors/:id">
+                                <Author/>
+                            </Route>
 
                             <Route exact path="/categories">
                                 <Categories/>
                             </Route>
 
                             <Route path="/categories/add">
-                                <FormCrud link="/categories"
-                                          inputs={CategoriesInputs()}
-                                          formClassName="box"
-                                          redirectAfterSubmit="/categories"/>
+                                <AddCategory/>
                             </Route>
                             <Route path="/categories/:id/edit">
                                 <EditCategory/>

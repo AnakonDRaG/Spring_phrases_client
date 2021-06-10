@@ -15,7 +15,7 @@ export const CRUD_ButtonCreate = observer((props) => {
                 <Button
                     onClick={()=> History.push(props.link)}
                     className={"btn btn-primary rounded-3  text-uppercase " + props.className}>
-                    <HiPlus/>
+                    <HiPlus className="fs-2"/>
                 </Button>
             )}
         </>

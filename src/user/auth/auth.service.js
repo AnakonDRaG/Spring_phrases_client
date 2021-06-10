@@ -31,18 +31,15 @@ class AuthService {
 
 
     _activateAuthChecker = () => {
-        console.log('qwe')
         if (this._isAuth())
             this._loadUserData()
 
         window.onload = () => {
             const interval =
                 setInterval(() => {
-                    console.log(this._isAuth())
                     if (isExpired(this._token.accessToken))
                         if (!isExpired(this._token.refreshToken))
                             Client.post("/auth/token/refresh", refreshData).then(res => {
-                                console.log(res)
                                 this._token = res.data.resources
                                 Cookies.set('accessToken', res.data?.resources.accessToken)
                                 Cookies.set('refreshToken', res.data?.resources.refreshToken)
@@ -76,7 +73,6 @@ class AuthService {
 
         this._token = formData
         this.isAuth = this._isAuth()
-        console.log(decodeToken(this._token.accessToken))
         data.set("accessToken", this._token.accessToken)
         await this._loadUserData()
         this._activateAuthChecker()

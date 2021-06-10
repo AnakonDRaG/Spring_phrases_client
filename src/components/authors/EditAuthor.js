@@ -51,7 +51,7 @@ export const EditAuthor = observer((props) => {
                             handleAfterSubmit={handleAfterSubmit}
                             inputs={AuthorInputs({firstName: author.firstName, lastName: author.lastName})}
                             link={URL + "/" + id}
-                            redirectAfterSubmit="/c_author"
+                            redirectAfterSubmit="/authors"
                             formClassName="box"
                             metrod="PUT"
                         />
